@@ -1,0 +1,263 @@
+<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 dark:bg-gray-900">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+      <!-- <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company"> -->
+      <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-100">Créer un compte</h2>
+    </div>
+  
+    <div *ngIf="formErrors.error" class="mt-10 px-4 py-4 sm:mx-auto sm:w-full sm:max-w-[480px] text-sm text-center bg-red-600 bg-opacity-10 text-red-600 dark:text-red-500" role="alert">
+      <div class="flex items-center justify-center">
+        <svg class="size-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>          
+        <p><strong>Impossible de s'inscrire !</strong></p>
+      </div>
+    </div>
+  
+    <div [class]="(formErrors.error ? '' : 'mt-10 ') + 'sm:mx-auto sm:w-full sm:max-w-[480px]'">
+      <div class="bg-white bg-opacity-30 dark:bg-gray-800 dark:bg-opacity-30 px-6 py-12 shadow sm:px-12">
+  
+        <form class="max-w-sm mx-auto mb-0" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  
+          <div>
+            <div class="relative group">
+              <div class="absolute icon-container inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <svg [class]="'size-4 group-has-[input:focus]:'+ (username.invalid ? 'text-red-500 ':'text-green-500 ')   +   (username.invalid ? (username.value ? (username.touched ? 'text-red-500 ':'text-blue-400 '):(username.touched ? 'text-red-500 ':'text-blue-500 ')):(username.value ? 'text-green-500':'text-gray-400'))" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>                  
+              </div>
+              <span *ngIf="username.invalid" [class]="'absolute -left-3 top-2.5 group-has-[input:focus]:'+ (username.invalid ? 'text-red-500 ':'text-green-500 ')   +   (username.invalid ? (username.value ? (username.touched ? 'text-red-500 ':'text-blue-400 '):(username.touched ? 'text-red-500 ':'text-blue-500 ')):(username.value ? 'text-green-500':'text-gray-400'))">*</span>
+              <input type="text" name="username" placeholder="Prénom Nom" formControlName="username" appFormatUsernameInput required [class]="(username.valid || username.untouched ? 'bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 ' : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block dark:placeholder-red-500 dark:border-red-500 ') + 'text-gray-900 dark:text-white w-full ps-10 p-2.5'" #usernameInput>
+            </div>
+            <div *ngIf="username.invalid && username.touched">
+              <p class="mt-2 text-xs text-red-600 dark:text-red-500 flex items-center place-content-between">
+                <span>
+                  <span class="font-medium">Prénom et Nom </span>
+                  <span *ngIf="username.hasError('required')">obligatoire</span>
+                  <span *ngIf="username.hasError('pattern')"><span>invalide</span> <span class="text-gray-600 dark:text-gray-500 ml-2">Exemple : Jean Dupont</span></span>
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <div class="relative group">
+              <div class="absolute icon-container inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <svg [class]="'size-4 group-has-[input:focus]:'+ (email.invalid ? (email.value || email.touched ? 'text-red-500 ' : 'text-blue-500 ') : 'text-green-500 ') + (email.pristine || !email.value ? (email.touched ? 'text-red-500':'text-gray-400') : (email.valid ? 'text-green-500':(email.touched || email.hasError('exists') ? 'text-red-500':'text-blue-400')))" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
+                </svg>
+              </div>
+              <span *ngIf="email.invalid" [class]="'absolute -left-3 top-2.5 group-has-[input:focus]:'+ (email.invalid ? (email.value || email.touched ? 'text-red-500 ' : 'text-blue-500 ') : 'text-green-500 ') + (email.pristine || !email.value ? (email.touched ? 'text-red-500':'text-gray-500') : (email.valid ? 'text-green-500':(email.touched || email.hasError('exists') ? 'text-red-500':'text-blue-400')))">*</span>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="Adresse email" formControlName="email" appUniqueEmail required [class]="(email.valid || (email.untouched && !email.hasError('exists')) ? 'bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 ' : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block dark:placeholder-red-500 dark:border-red-500 ') + 'text-gray-900 dark:text-white w-full ps-10 p-2.5'" #emailInput>
+            </div>
+            <div *ngIf="email.invalid && (email.touched || email.hasError('exists'))">
+              <p class="mt-2 text-xs text-red-600 dark:text-red-500 flex items-center place-content-between">
+                <span>
+                  <span class="font-medium">Adresse email </span>
+                  <span *ngIf="email.hasError('required')">obligatoire</span>
+                  <span *ngIf="email.hasError('pattern')"><span>invalide</span> <span class="text-gray-600 dark:text-gray-500 ml-2">Exemple : adresse&#64;email.com</span></span>
+                  <span *ngIf="email.hasError('exists')"><span>déjà enregistrée.</span> <a routerLink="/connexion" class="ml-2 text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Je me connecte.</a></span>
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                    <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                </div>
+            </div>
+          </div>
+  
+          <div class="mt-12">
+            <div class="relative group">
+              <div class="absolute icon-container inset-y-0 start-0 flex items-center ps-3.5 pe-3.5 pointer-events-none">
+                <svg [class]="'size-4 group-has-[input:focus]:'+ (password.invalid ? (password.value || password.touched ? 'text-red-500 ' : 'text-blue-500 ') : 'text-green-500 ') + (password.pristine || !password.value ? (password.touched ? 'text-red-500':'text-gray-400') : (password.valid ? 'text-green-500':(password.touched ? 'text-red-500':'text-blue-400')))" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+                </svg>
+              </div>
+              <span *ngIf="password.invalid" [class]="'absolute -left-3 top-2.5 group-has-[input:focus]:'+ (password.invalid ? (password.value || password.touched ? 'text-red-500 ' : 'text-blue-500 ') : 'text-green-500 ') + (password.pristine || !password.value ? (password.touched ? 'text-red-500':'text-gray-500') : (password.valid ? 'text-green-500':(password.touched ? 'text-red-500':'text-blue-400')))">*</span>
+              <input id="hs-strong-password-with-indicator-and-hint-in-popover" name="password" type="{{showPassword ? 'text' : 'password'}}" placeholder="Mot de passe" formControlName="password" required [class]="(password.valid || password.untouched ? 'bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 ' : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block dark:placeholder-red-500 dark:border-red-500 ') + ' text-gray-900 dark:text-white w-full ps-10 pe-8 p-2.5'" #passwordInput>
+              <div class="absolute inset-y-0 right-2 flex items-center" (click)="togglePasswordVisibility()">
+                <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-500 dark:text-gray-400 hover:text-blue-500">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                </svg>
+                <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-gray-500 dark:text-gray-400 hover:text-blue-500">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                </svg>
+              </div>
+              <div class="relative mt-0">
+                <div id="hs-strong-password-popover" class="hidden absolute z-10 w-full">
+                  <div class="p-1 mb-11 bg-white bg-opacity-50 shadow-md rounded-lg dark:bg-gray-900 dark:border dark:border-gray-700 dark:divide-neutral-700">
+                    <div class="px-3">
+                      <h4 class="my-2 text-xs font-semibold text-gray-800 dark:text-white">
+                        Votre mot de passe doit contenir :
+                      </h4>
+                      <ul class="space-y-1 mb-3 text-xs text-gray-500 dark:text-neutral-500">
+                        <li data-hs-strong-password-hints-rule-text="min-length" class="hs-strong-password-active:text-green-500 flex items-center gap-x-2">
+                          <span class="hidden" data-check="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                          </span>
+                          <span data-uncheck="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M18 6 6 18"></path>
+                              <path d="m6 6 12 12"></path>
+                            </svg>
+                          </span>
+                          au moins 8 caractères.
+                        </li>
+                        <li data-hs-strong-password-hints-rule-text="lowercase" class="hs-strong-password-active:text-green-500 flex items-center gap-x-2">
+                          <span class="hidden" data-check="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                          </span>
+                          <span data-uncheck="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M18 6 6 18"></path>
+                              <path d="m6 6 12 12"></path>
+                            </svg>
+                          </span>
+                          au moins une lettre minuscule.
+                        </li>
+                        <li data-hs-strong-password-hints-rule-text="uppercase" class="hs-strong-password-active:text-green-500 flex items-center gap-x-2">
+                          <span class="hidden" data-check="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                          </span>
+                          <span data-uncheck="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M18 6 6 18"></path>
+                              <path d="m6 6 12 12"></path>
+                            </svg>
+                          </span>
+                          au moins une lettre majuscule.
+                        </li>
+                        <li data-hs-strong-password-hints-rule-text="numbers" class="hs-strong-password-active:text-green-500 flex items-center gap-x-2">
+                          <span class="hidden" data-check="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                          </span>
+                          <span data-uncheck="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M18 6 6 18"></path>
+                              <path d="m6 6 12 12"></path>
+                            </svg>
+                          </span>
+                          au moins un chiffre.
+                        </li>
+                        <li data-hs-strong-password-hints-rule-text="special-characters" class="hs-strong-password-active:text-green-500 flex items-center gap-x-2">
+                          <span class="hidden" data-check="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                          </span>
+                          <span data-uncheck="">
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M18 6 6 18"></path>
+                              <path d="m6 6 12 12"></path>
+                            </svg>
+                          </span>
+                          au moins un caractère spécial.
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="px-8">
+                      <div id="hs-strong-password-in-popover" data-hs-strong-password='{
+                          "target": "#hs-strong-password-with-indicator-and-hint-in-popover",
+                          "hints": "#hs-strong-password-popover",
+                          "stripClasses": "hs-strong-password:opacity-100 hs-strong-password-accepted:bg-green-500 h-1 flex-auto rounded-full bg-blue-500 opacity-50 mx-1",
+                          "minLength": "8",
+                          "mode": "popover",
+                          "popoverSpace": "1"
+                        }' class="flex mt-1">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="password.invalid && password.touched">
+              <p class="mt-2 text-xs text-red-600 dark:text-red-500">
+                <span class="font-medium">{{ formErrors.password.strong }}</span> <span>{{ formErrors.password.main }}</span>
+                <span *ngIf="formErrors.password.ex && password.hasError('pattern')" class="text-gray-600 dark:text-gray-500 ml-2">Exemple : {{ formErrors.password.ex }}</span>
+              </p>
+            </div>
+          </div>
+
+         
+
+          <div class="mt-4">
+            <div class="relative group">
+              <div class="absolute icon-container inset-y-0 start-0 flex items-center ps-3.5 pe-3.5 pointer-events-none">
+                <svg [class]="'size-4 group-has-[input:focus]:'+ (confirmPassword.invalid ? (confirmPassword.value  || (password.value && password.invalid)? 'text-red-600 ' : 'text-blue-500 ') : 'text-green-500 ') + (confirmPassword.pristine || !confirmPassword.value ? (formErrors.confirm_password.main !== '' && confirmPassword.invalid ? 'text-red-600 dark:text-red-500' : 'text-gray-500 dark:text-gray-400') : (confirmPassword.valid ? 'text-green-500':'text-red-600 dark:text-red-500'))" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+                </svg>
+              </div>
+              <span *ngIf="confirmPassword.invalid" [class]="'absolute -left-3 top-2.5 '+ (confirmPassword.value ? 'text-red-600':'text-gray-500') +' group-has-[input:focus]:' + (confirmPassword.value ? 'text-red-600':'text-blue-500')">*</span>
+              <input id="confirm_password" name="confirm_password" type="password" autocomplete="current-password" placeholder="Confirmation du mot de passe" formControlName="confirm_password" required [class]="(formErrors.confirm_password.main  === '' || !confirmPassword.invalid ? 'bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 ' : 'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block dark:placeholder-red-500 dark:border-red-500 ') + ' text-gray-900 dark:text-white w-full ps-10 pe-8 p-2.5'" #confirmPasswordInput>
+            </div>
+            <div *ngIf="formErrors.confirm_password.main !== '' && confirmPassword.invalid">
+              <p class="mt-2 text-xs text-red-600 dark:text-red-500"><span class="font-medium">{{ formErrors.confirm_password.strong }}</span>{{ formErrors.confirm_password.main }}</p>
+            </div>
+          </div>
+  
+          <div class="flex items-center justify-between flex-wrap mt-6">
+            <div class="flex items-center relative">
+              <span *ngIf="!confirmTerms.value" class="absolute -left-3 top-0.5 text-gray-500">*</span>
+              <input id="confirm_terms" name="confirm_terms" type="checkbox" formControlName="confirm_terms" [class]="'h-4 w-4 rounded text-indigo-600 focus:ring-indigo-600 dark:bg-gray-700 dark:text-indigo-500 ' + (formErrors.confirm_terms.main !== '' && confirmTerms.invalid ? 'border-red-600':'border-gray-300 dark:border-gray-600')">
+              <label for="confirm_terms" class="ml-3 block text-sm leading-6 text-gray-900 dark:text-gray-100"> j'ai lu et j'accepte les <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Termes et Conditions</a></label>
+            </div>
+            <div *ngIf="formErrors.confirm_terms.main !== '' && confirmTerms.invalid">
+              <p class="mt-2 text-xs text-red-600 dark:text-red-500">{{ formErrors.confirm_terms.main }}<span class="font-medium">{{ formErrors.confirm_terms.strong }}</span>.</p>
+            </div>
+          </div>
+  
+          <div class="mt-6">
+            <!-- <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm">Continuer</button> -->
+            <button type="submit" [class]="(!signupForm.valid ? 'cursor-not-allowed opacity-50 bg-indigo-500 ' : 'bg-indigo-600 hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ') + 'flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm'" [disabled]="!signupForm.valid">Continuer</button>
+          </div>
+        </form>
+
+        <div class="relative mt-10">
+          <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
+          </div>
+          <div class="relative flex justify-center text-sm leading-6">
+            <span class="bg-white px-6 text-gray-900 dark:bg-gray-800 dark:text-gray-100 rounded-lg">ou s'inscrire avec</span>
+          </div>
+        </div>
+  
+        <div class="mt-6 grid grid-cols-2 gap-4">
+          <a href="#" class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent dark:bg-gray-700 dark:text-gray-100 dark:ring-gray-600 dark:hover:bg-gray-600">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.0003 4.75C13.7703 4.75 15.3553 5.36002 16.6053 6.54998L20.0303 3.125C17.9502 1.19 15.2353 0 12.0003 0C7.31028 0 3.25527 2.69 1.28027 6.60998L5.27028 9.70498C6.21525 6.86002 8.87028 4.75 12.0003 4.75Z" fill="#EA4335" />
+              <path d="M23.49 12.275C23.49 11.49 23.415 10.73 23.3 10H12V14.51H18.47C18.18 15.99 17.34 17.25 16.08 18.1L19.945 21.1C22.2 19.01 23.49 15.92 23.49 12.275Z" fill="#4285F4" />
+              <path d="M5.26498 14.2949C5.02498 13.5699 4.88501 12.7999 4.88501 11.9999C4.88501 11.1999 5.01998 10.4299 5.26498 9.7049L1.275 6.60986C0.46 8.22986 0 10.0599 0 11.9999C0 13.9399 0.46 15.7699 1.28 17.3899L5.26498 14.2949Z" fill="#FBBC05" />
+              <path d="M12.0004 24.0001C15.2404 24.0001 17.9654 22.935 19.9454 21.095L16.0804 18.095C15.0054 18.82 13.6204 19.245 12.0004 19.245C8.8704 19.245 6.21537 17.135 5.2654 14.29L1.27539 17.385C3.25539 21.31 7.3104 24.0001 12.0004 24.0001Z" fill="#34A853" />
+            </svg>
+            <span class="text-sm font-semibold leading-6">Google</span>
+          </a>
+  
+          <a href="#" class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent dark:bg-gray-700 dark:text-gray-100 dark:ring-gray-600 dark:hover:bg-gray-600">
+            <svg class="h-5 w-5 fill-[#24292F]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-sm font-semibold leading-6">GitHub</span>
+          </a>
+        </div>
+
+      </div>
+  
+      <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-400">
+        J'ai déjà un compte ?
+        <a routerLink="/connexion" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">Je me connecte.</a>
+      </p>
+    </div>
+  </div>
+  
